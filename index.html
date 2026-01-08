@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jam Digital Modern</title>
+    <!-- Menggunakan Tailwind CSS untuk styling cepat -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .clock-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+        }
+
+        .date-text {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 640px) {
+            .clock-text {
+                font-size: 3rem;
+            }
+            .glass-card {
+                padding: 2rem;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-card">
+        <!-- Menampilkan Hari dan Tanggal -->
+        <div id="date" class="date-text">Memuat Tanggal...</div>
+        
+        <!-- Menampilkan Jam -->
+        <div id="clock" class="clock-text">00:00:00</div>
+        
+        <!-- Pesan Tambahan -->
+        <div class="mt-6 text-sm text-slate-500 font-light">
+            <p>Waktu adalah uang, gunakanlah dengan bijak.</p>
+        </div>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            
+            // Mengambil Jam, Menit, Detik
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            
+            // Format 2 digit (00)
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            // Update Teks Jam
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+            
+            // Format Tanggal Indonesia
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const dateStr = now.toLocaleDateString('id-ID', options);
+            document.getElementById('date').textContent = dateStr;
+        }
+
+        // Jalankan fungsi setiap 1 detik
+        setInterval(updateTime, 1000);
+
+        // Panggil langsung saat halaman dibuka agar tidak kosong
+        updateTime();
+    </script>
+</body>
+</html>
